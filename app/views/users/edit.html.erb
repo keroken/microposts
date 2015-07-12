@@ -1,7 +1,4 @@
-<h1>
-  <%= gravatar_for @user %>
-  <%= @user.name %>
-</h1>
+<h1>Edit Profile</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -13,6 +10,12 @@
 
       <%= f.label :email %>
       <%= f.text_field :email %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
       
       <%= f.label :location %>
       <%= f.text_field :location %>
@@ -20,7 +23,7 @@
       <%= f.label :age %>
       <%= f.number_field :age %>
 
-      <%= f.submit "Edit my profile", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Update my profile", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>
