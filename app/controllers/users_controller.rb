@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update]
   
   def show
     @user = User.find(params[:id])
@@ -20,11 +21,14 @@ class UsersController < ApplicationController
   end
   
   def edit
+    @user = User.find(params[:id])
   end
   
   def update
+    @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to root_path , notice: 'プロフィールを更新しました'
+      flash[:success] = 'プロフィールを更新しました'
+      redirect_to @user
     else
       render 'edit'
     end
@@ -36,7 +40,13 @@ class UsersController < ApplicationController
                                  :password_confirmation, :location, :age)
   end
   
-  def set_user
-    @user = User.find(params[:id])
+  def logged_in_user
+    redirect_to login_url, notice: 'Please log in.' unless logged_in?
   end
+  
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_path) unless current_user?(@user)
+  end
+  
 end
